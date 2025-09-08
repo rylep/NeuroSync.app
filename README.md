@@ -1,6 +1,6 @@
 NeuroSync App
 <div align="center">
-<img src="LOGO.jpg" alt="NeuroSync App Logo" width="200"/>
+<img src="blob:https://gemini.google.com/ee317c56-5e82-4f86-81eb-78f3a3854c01" alt="NeuroSync App Logo" width="200"/>
 </div>
 
 <br>
