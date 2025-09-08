@@ -1,10 +1,6 @@
 NeuroSync App
 <div align="center">
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/React_Native-20232A%3Fstyle%3Dfor-the-badge%26logo%3Dreact%26logoColor%3D61DAFB" alt="React Native"/>
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Node.js-339933%3Fstyle%3Dfor-the-badge%26logo%3Dnodedotjs%26logoColor%3Dwhite" alt="Node.js"/>
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Firebase-FFCA28%3Fstyle%3Dfor-the-badge%26logo%3Dfirebase%26logoColor%3Dblack" alt="Firebase"/>
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/Scrum-Agile-blue%3Fstyle%3Dfor-the-badge" alt="Scrum"/>
-<img src="https://www.google.com/search?q=https://img.shields.io/badge/License-MIT-yellow.svg%3Fstyle%3Dfor-the-badge" alt="License: MIT"/>
+<img src="LOGO.jpg" alt="NeuroSync App Logo" width="200"/>
 </div>
 
 <br>
