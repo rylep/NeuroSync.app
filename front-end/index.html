@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroSync</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+    <button class="mobile-menu-toggle" aria-label="Abrir menu">
+    <i class="fas fa-bars"></i> </button>
+    <div class="user-controls-fixed">
+        <!-- Este div será preenchido pelo JavaScript -->
+        <div id="user-auth-controls">
+            <button id="login-trigger-btn" class="btn btn-secondary">Login</button>
+        </div>
+        <button class="btn btn-primary" onclick="navigateTo('#plans')">Meu Plano</button>
+    </div>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="imagens/logo.png.jpg" class="logo" onclick="navigateTo('#home')">
+                <img src="imagens/logo.png.jpg" alt="NeuroSync Logo" class="logo-image">
+                <span>NeuroSync+</span>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#home" class="active"><i class="fas fa-home"></i> Início</a>
+                <a href="#meditate"><i class="fas fa-brain"></i> Meditar</a>
+                <a href="#breathe"><i class="fas fa-wind"></i> Respirar</a>
+                <a href="#community"><i class="fas fa-users"></i> Comunidade</a>
+                <a href="#games"><i class="fas fa-puzzle-piece"></i> Jogos</a>
+                <a href="#videos"><i class="fas fa-video"></i> Vídeos</a>
+                <a href="#plans"><i class="fas fa-gem"></i> Planos</a>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Abrir menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <div id="home" class="page active">
+            <div class="container">
+                <h1 id="user-welcome-title">Olá, bem-vindo(a)!</h1>
+                <p class="subtitle">Sua jornada de autocuidado continua aqui.</p>
+                <div class="dashboard-grid">
+                    <div class="card daily-goal-card">
+                        <h4>Sua Meta Diária</h4>
+                        <div class="progress-ring">
+                            <svg class="progress-ring__svg">
+                                <circle class="progress-ring__circle-bg" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                <circle id="daily-goal-circle" class="progress-ring__circle" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                            </svg>
+                            <span id="daily-goal-text" class="progress-ring__text">0/15 min</span>
+                        </div>
+                        <button id="add-progress-btn" class="btn btn-secondary">Simular Progresso (+5min)</button>
+                    </div>
+                    <div class="card quick-action-card" onclick="navigateTo('#breathe')">
+                        <i class="fas fa-wind"></i>
+                        <h4>Respiração Rápida</h4>
+                        <p>Acalme-se em 1 minuto</p>
+                    </div>
+                    <div class="card quick-action-card" onclick="navigateTo('#games')">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <h4>Jogos Mentais</h4>
+                        <p>Exercite sua mente</p>
+                    </div>
+                     <div class="card quick-action-card" onclick="navigateTo('#videos')">
+                        <i class="fas fa-video"></i>
+                        <h4>Vídeos de Apoio</h4>
+                        <p>Assista a conteúdos úteis</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="meditate" class="page">
+            <div class="container">
+                <h1><i class="fas fa-brain"></i> Meditações Guiadas</h1>
+                <div class="filter-tabs">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="ansiedade">Ansiedade</button>
+                    <button class="filter-btn" data-filter="foco">Foco</button>
+                    <button class="filter-btn" data-filter="sono">Sono</button>
+                </div>
+                <div id="meditation-list" class="grid-container"></div>
+            </div>
+        </div>
+        
+        <div id="breathe" class="page">
+             <div class="container">
+                <div class="breathing-widget">
+                    <h1><i class="fas fa-wind"></i> Respiração Consciente</h1>
+                    <p class="timer-display">00:00</p>
+                    <div class="breathing-circle"></div>
+                    <p class="breathing-instruction">Escolha uma duração para começar</p>
+                    <div class="duration-options">
+                        <button class="btn-duration" data-duration="60">1 min</button>
+                        <button class="btn-duration" data-duration="180">3 min</button>
+                        <button class="btn-duration" data-duration="300">5 min</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="community" class="page">
+            <div class="container">
+                <h1><i class="fas fa-users"></i> Comunidade de Apoio</h1>
+                <p class="subtitle">Grupos de nicho com supervisão profissional para um ambiente seguro.</p>
+                <div id="community-list" class="grid-container"></div>
+            </div>
+        </div>
+
+        <div id="games" class="page">
+            <div class="container">
+                <h1><i class="fas fa-puzzle-piece"></i> Jogos Mentais</h1>
+                <p class="subtitle">Relaxe e exercite sua mente. Disponível no plano Basic.</p>
+                <div id="games-list" class="grid-container"></div>
+            </div>
+        </div>
+
+        <div id="videos" class="page">
+            <div class="container">
+                <h1><i class="fas fa-video"></i> Vídeos de Apoio</h1>
+                <p class="subtitle">Conteúdos selecionados por nossos especialistas.</p>
+                <div id="videos-list" class="grid-container"></div>
+            </div>
+        </div>
+
+        <div id="plans" class="page">
+            <div class="container">
+                <h1><i class="fas fa-gem"></i> Nossos Planos</h1>
+                <p class="subtitle">Escolha o plano ideal para sua jornada de bem-estar.</p>
+                <div class="plans-container">
+                    <!-- Planos inseridos via JS -->
+                </div>
+                <div class="health-plan-check card">
+                    <h4><i class="fas fa-notes-medical"></i> Cobertura por Plano de Saúde</h4>
+                    <p>Verifique se seu convênio oferece cobertura para consultas e planos NeuroSync+.</p>
+                    <div class="input-group">
+                        <input type="text" placeholder="Digite o nome do seu convênio">
+                        <button class="btn btn-primary">Verificar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Acesse sua Conta</h2>
+            <!-- CORRIGIDO: Adicionado id="login-form" -->
+            <form id="login-form"> 
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" placeholder="********">
+                
+                <!-- Mensagem de erro (útil para o Item 3) -->
+                <p id="login-error-message" ></p>
+
+                <button type="submit" class="btn btn-primary">Entrar</button>
+
+                <!-- Link para abrir o modal de cadastro -->
+                <p id="no-have-login">
+                Não tem conta? 
+                <a href="#" id="show-register-link">Cadastre-se</a>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div id="register-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Crie sua Conta</h2>
+        <!-- <form id="register-form"> para capturar o submit no JS -->
+        <form id="register-form">
+            <label for="register-name">Nome:</label>
+            <input type="text" id="register-name" name="name" placeholder="Seu nome completo" required>
+
+            <label for="register-email">Email:</label>
+            <input type="email" id="register-email" name="email" placeholder="seuemail@exemplo.com" required>
+
+            <label for="register-password">Senha:</label>
+            <input type="password" id="register-password" name="password" placeholder="Mínimo 6 caracteres" required>
+
+            <label for="register-confirm-password">Confirmar Senha:</label>
+            <input type="password" id="register-confirm-password" name="confirm-password" placeholder="Repita a senha" required>
+            
+            <!-- Mensagem de erro que será preenchida pelo JS -->
+            <p id="register-error-message"></p>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        
+        <p id="i-have-login">
+            Já tem conta? 
+            <a href="#" id="show-login-link">Faça Login</a>
+        </p>
+    </form>
+    </div>      
+</div>
+<!-- Modal do jogo de caça-palavras -->
+ <div id="word-search-modal" class="modal">
+    <div class="modal-content game-modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Caça-Palavras</h2>
+        
+        <div class="game-stats">
+            <div>Tempo: <span id="word-search-timer">00:00</span></div>
+            <div>Recorde: <span id="word-search-best-time">--:--</span></div>
+        </div>
+
+        <div class="word-search-layout">
+            <div id="word-search-grid">
+                <!-- As letras serão geradas pelo JS -->
+            </div>
+            <div id="word-search-list-container">
+                <h3>Palavras:</h3>
+                <ul id="word-search-list">
+                    <!-- A lista será gerada pelo JS -->
+                </ul>
+                <p id="word-search-win-message" class="modal-error-message" ></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js "></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
