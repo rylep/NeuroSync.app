@@ -12,7 +12,39 @@
     --text-muted: #6c757d;
     --shadow: 0 4px 12px rgba(0,0,0,0.08);
     --border-radius: 12px;
+
+    /* VARIAVEIS DO CAÇA PALAVRAS */
+    --title-width: 2.2rem;
+    --tile-height: 2.2rem;
+    --line-discount: 1.32;
+    --diagonal-line-discount: 1.37;
+    --color-1: #FD88FB;
+    --color-2: #FCF088;
+    --color-3: #FF6C63;
+    --color-4: #56FCB1;
+    --color-5: #FCBB68;
+    --color-6: #689EFC;
+    --color-7: #FD88FB;
+    --color-8: #FCF088;
+    --color-9: #FF6C63;
+    --color-10: #56FCB1;
+    --color-11: #FCBB68;
+    --color-12: #689EFC;
 }
+/* CORREÇÃO DO BOTÃO FECHAR */
+        .close-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 20px; 
+            font-size: 2rem; 
+            cursor: pointer; 
+            color: #555; 
+            z-index: 20; 
+            line-height: 1;
+            padding: 5px;
+        }
+        .close-btn:hover { color: var(--neuro-red); }
+ 
 
 /* RESET E ESTILOS BASE */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,6 +53,14 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     line-height: 1.6;
+}
+.user-controls-fixed { 
+    position: fixed; 
+    top: 1rem; 
+    right: 1rem; 
+    z-index: 1001; 
+    display: flex; 
+    gap: 0.5rem; 
 }
 .container { width: 90%; max-width: 1100px; margin: 0 auto; }
 
@@ -104,6 +144,7 @@ h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
 /* MODAL */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
 .modal-content { background-color: var(--surface-color); padding: 2rem; border-radius: var(--border-radius); width: 90%; max-width: 400px; position: relative; animation: slideIn 0.4s ease; }
+.game-modal-content { max-width: 700px; }
 @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.8rem; cursor: pointer; color: #aaa; }
 .modal-content form { display: flex; flex-direction: column; gap: 1rem; }
@@ -117,7 +158,141 @@ h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
     .nav-links a { margin: 0.5rem 0; text-align: center; }
     .mobile-menu-toggle { display: block; }
 }
-/* Adicione este código no final do arquivo style.css */
+/*CAÇA-PALAVRAS */
+/* --- CSS CAÇA-PALAVRAS (LAYOUT) --- */
+        .game-modal-content { 
+            max-width: 700px; 
+            background-color: #F5F6F7; 
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Importante para o posicionamento do X */
+        }
+        #word-search-timer {
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            color: var(--neuro-blue);
+            position: absolute;
+            top: 20px;
+            right: 60px;
+        }
+        #word-search-win-message {
+            margin-top: 10px; 
+            font-weight: bold; 
+            color: var(--neuro-green);
+        }
+        
+        .game-wrapper { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding-top: 10px; 
+            width: 100%;
+        }
+
+        .words-container {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            width: 100%; 
+            max-width: 450px; 
+            height: auto; 
+            margin-bottom: 20px;
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            padding: 10px; 
+            background-color: #fff;
+        }
+
+        .row-1, .row-2, .row-3 {
+            display: flex; 
+            flex-direction: row; 
+            align-items: center; 
+            justify-content: space-between;
+            width: 100%; 
+            height: auto; 
+            padding: 5px 10px; 
+            font-size: 0.9rem;
+            flex-wrap: wrap; 
+        }
+
+        .word-found { color: gray; text-decoration: line-through; font-weight: bold; }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(12, 1fr);
+            border: 2px solid #333; 
+            border-radius: 5px; 
+            padding: 5px; 
+            background: #fff;
+            
+            touch-action: none;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1 / 1; 
+        }
+
+        .board:hover { cursor: grab; }
+        .board.drawing:hover { cursor: crosshair; }
+
+        .tile {
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            width: 100%; 
+            height: 100%;
+            font-size: 1rem; 
+            font-weight: 600;
+            position: relative; 
+        }
+
+        .tile > span { position: absolute; z-index: 14; pointer-events: none; }
+
+        .draw-line, .correct-line {
+            position: absolute; border-radius: 30px; opacity: 0.6;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .draw-line {
+            width: 70%; height: 70%;
+            background-color: #8BFFFF; transition: background-color 0.2s;
+            top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 13;
+        }
+
+        .game-controls {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .nav-links { display: none; flex-direction: column; width: 100%; background-color: var(--surface-color); position: absolute; top: 60px; left: 0; padding: 1rem; box-shadow: var(--shadow); }
+            .nav-links.active { display: flex; }
+            .mobile-menu-toggle { display: block; }
+        }
+
+        @media screen and (max-width: 480px) {
+            :root { --tile-width: 1.8rem; --tile-height: 1.8rem; }
+            .tile { font-size: 1rem; }
+        }
+/* JANELA DO PLAYER MEDITAÇÃO */
+#player-video-container {
+    width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* AJUSTES NA LOGO PARA INCLUIR A IMAGEM */
 .logo {
@@ -183,7 +358,7 @@ h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
 }
 /* JOGOS */
 .game-modal-content {
-    max-width: 650px; /* Um pouco mais largo para o jogo */
+    max-width: 800px; /* Um pouco mais largo para o jogo */
 }
 
 .game-stats {
@@ -204,12 +379,12 @@ h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
 
 #word-search-grid {
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* Grid 10x10 */
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: repeat(12, 1fr); /* Grid 10x10 */
+    grid-template-rows: repeat(12, 1fr);
     border: 1px solid #ddd;
     /* Força o grid a ser um quadrado */
-    width: 350px; 
-    height: 350px;
+    width: 450px; 
+    height: 450px;
     -webkit-user-select: none; /* Safari 3+, iOS */
     -ms-user-select: none; /* IE10+ */
     user-select: none; /* Impede a seleção de texto */
@@ -278,4 +453,251 @@ h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
     text-align: center; 
     margin-top: 1rem; 
     font-size: 0.9em;
+}
+.modal-error-message {
+    color: var(--neuro-red); /* Usando a variável de cor */
+    font-size: 0.9em;
+    text-align: center;
+    min-height: 1.2em; /* Evita que o modal "pule" quando a msg aparece */
+}
+
+.modal-switch-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9em;
+}
+
+.modal-switch-link a {
+    color: var(--neuro-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.modal-switch-link a:hover {
+    text-decoration: underline;
+}
+.i-have-login {
+    text-align: center; 
+    margin-top: 1rem; 
+    font-size: 0.9em;
+}
+/* JOGOS */
+.game-modal-content {
+    max-width: 800px; /* Um pouco mais largo para o jogo */
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-around;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin: -1rem 0 1.5rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+
+.modal-success-message {
+    color: var(--neuro-green); /* Cor verde */
+    font-size: 0.9em;
+    text-align: center;
+    min-height: 1.2em;
+}
+.login-error-message {
+    color: red; 
+    font-size: 0.9em; 
+    text-align: center;
+}
+#progress-ring_circle {
+    transition: stroke-dashoffset 0.5s ease;
+    display: block;
+}
+.no-have-login {
+    text-align: center; 
+    margin-top: 1rem; 
+    font-size: 0.9em;
+}
+/* --- ESTILOS DO CAÇA-PALAVRAS (WORD SEARCH) --- */
+.word-search-content {
+    max-width: 750px; /* Aumenta o tamanho do modal para o jogo */
+    text-align: center;
+}
+.game-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+@media (min-width: 600px) {
+    .game-area {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+.game-info {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.timer-display {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--neuro-red);
+}
+
+/* GRID / BOARD */
+.board {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Cria a grade 12x12 */
+    border: 2px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+    max-width: 480px; 
+    aspect-ratio: 1 / 1;
+    margin: 0 auto; 
+    position: relative; 
+}
+
+.letter-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Tamanho da fonte adaptável */
+    font-size: clamp(0.8rem, 3vw, 1.5rem); 
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: var(--surface-color);
+    border: 1px solid #eee;
+    transition: background-color 0.1s ease;
+}
+
+.letter-cell.selected {
+    background-color: var(--neuro-yellow);
+    color: #fff;
+}
+
+.letter-cell.found {
+    background-color: var(--neuro-green);
+    color: #fff;
+    pointer-events: none; /* Desativa clique depois de encontrar */
+}
+
+/* PALAVRAS A ENCONTRAR */
+#word-search-list-container {
+    padding: 10px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    flex-grow: 1;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+}
+@media (min-width: 600px) {
+    #word-search-list-container {
+        width: auto;
+    }
+}
+
+#word-search-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas para a lista */
+    gap: 5px 15px;
+}
+
+#word-search-list li {
+    font-weight: 600;
+    color: var(--text-color);
+    transition: all 0.3s;
+    font-size: 0.95rem;
+}
+
+#word-search-list li.found {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+.game-controls {
+    margin-top: 15px;
+    text-align: center;
+}
+/* Estilos do Player de Meditação (Sprint 3) */
+.player-visualizer {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 2rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.player-visualizer i {
+    font-size: 3rem;
+    color: var(--neuro-blue);
+    z-index: 10;
+}
+.player-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--neuro-blue);
+    border-radius: 50%;
+    opacity: 0.1;
+    transform: scale(0.8);
+}
+.player-circle.playing {
+    animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(0.8); opacity: 0.1; }
+    50% { transform: scale(1.1); opacity: 0.2; }
+}
+
+.player-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+.player-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#player-btn.play {
+    background-color: var(--neuro-green);
+    color: #fff;
+}
+#player-play-pause-btn.pause {
+    background-color: var(--neuro-red);
+    color: #fff;
+}
+b.style.borderColor {
+    border-color: var(--neuro-blue);
+}
+/* RESPONSIVIDADE */
+@media (max-width: 992px) {
+    .nav-links { display: none; flex-direction: column; width: 100%; background-color: var(--surface-color); position: absolute; top: 65px; left: 0; padding: 1rem; box-shadow: var(--shadow); }
+    .nav-links.active { display: flex; }
+}
+/* RECOMENDAÇÃO (Novos Estilos) */
+#btn-recommend-time {
+    margin-top: 1rem;
+}
+
+#recommendation-display {
+    display: none; /* Controlado via JS */
+    margin-top: 1rem;
+    color: var(--neuro-blue);
+    font-weight: 700;
 }

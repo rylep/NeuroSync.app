@@ -23,7 +23,7 @@ Metas Personalizadas: Defina metas diárias e semanais para manter a consistênc
 
 Jornada do Usuário: Um caminho gamificado que recompensa o usuário à medida que ele avança em suas atividades, tornando a experiência mais engajadora.
 
-Comunidade (Em breve): Funcionalidade para interagir, compartilhar conquistas e desafiar amigos.
+Comunidade (Em breve): Funcionalidade para interagir e compartilhar conquistas.
 
 🚀 Metodologia: Uma Integração Scrum
 O desenvolvimento do NeuroSync App foi estruturado em torno do framework Scrum, o que nos permitiu construir o produto de forma iterativa e incremental, garantindo agilidade e capacidade de adaptação.

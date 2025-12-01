@@ -89,18 +89,33 @@
             </div>
         </div>
         
+        <!-- Breathing -->
         <div id="breathe" class="page">
              <div class="container">
                 <div class="breathing-widget">
                     <h1><i class="fas fa-wind"></i> Respiração Consciente</h1>
-                    <p class="timer-display">00:00</p>
-                    <div class="breathing-circle"></div>
+                    <p class="timer-display" id="widget-timer-display">00:00</p>
+                    
+                    <div class="breathing-circle-container">
+                        <div class="breathing-circle"></div>
+                    </div>
+                    <!-- Novo Botão de Recomendação -->
+                    <button id="btn-recommend-time" class="btn btn-secondary" style="margin-top: 1rem;">
+                        <i class="fas fa-magic"></i> Obter Recomendação
+                    </button>
+                    <p id="recommendation-display"></p>
+                    
+                    
                     <p class="breathing-instruction">Escolha uma duração para começar</p>
+                    
                     <div class="duration-options">
                         <button class="btn-duration" data-duration="60">1 min</button>
                         <button class="btn-duration" data-duration="180">3 min</button>
                         <button class="btn-duration" data-duration="300">5 min</button>
                     </div>
+                    
+                    <!-- Botão Stop Opcional -->
+                    <button id="stop-breathing-btn" class="btn btn-secondary">Parar</button>
                 </div>
             </div>
         </div>
@@ -152,14 +167,14 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2>Acesse sua Conta</h2>
-            <!-- CORRIGIDO: Adicionado id="login-form" -->
+            <!-- Adicionado id="login-form" -->
             <form id="login-form"> 
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com">
                 <label for="password">Senha:</label>
                 <input type="password" id="password" name="password" placeholder="********">
                 
-                <!-- Mensagem de erro (útil para o Item 3) -->
+                <!-- Mensagem de erro -->
                 <p id="login-error-message" ></p>
 
                 <button type="submit" class="btn btn-primary">Entrar</button>
@@ -201,38 +216,125 @@
     </form>
     </div>      
 </div>
-<!-- Modal do jogo de caça-palavras -->
- <div id="word-search-modal" class="modal">
-    <div class="modal-content game-modal-content">
-        <span class="close-btn">&times;</span>
-        <h2>Caça-Palavras</h2>
-        
-        <div class="game-stats">
-            <div>Tempo: <span id="word-search-timer">00:00</span></div>
-            <div>Recorde: <span id="word-search-best-time">--:--</span></div>
-        </div>
+<!-- Modal Player Meditação -->
+    <div id="meditation-player-modal" class="modal">
+        <div class="modal-content player-modal-content">
+            <span class="close-btn" onclick="closeMeditationPlayer()">&times;</span>
+            <h2 id="player-title">Carregando...</h2>
+            <span id="player-category-tag" class="tag">Foco</span>
 
-        <div class="word-search-layout">
-            <div id="word-search-grid">
-                <!-- As letras serão geradas pelo JS -->
+            <div id="player-video-container">
+                <!-- Iframe injetado pelo JS -->
             </div>
-            <div id="word-search-list-container">
-                <h3>Palavras:</h3>
-                <ul id="word-search-list">
-                    <!-- A lista será gerada pelo JS -->
-                </ul>
-                <p id="word-search-win-message" class="modal-error-message" ></p>
+
+            <div class="player-visualizer">
+                <div id="player-visual-circle" class="player-circle"></div>
+                <i class="fas fa-brain"></i>
+            </div>
+            
+            <p id="player-timer" class="timer-display">00:00</p>
+            <p id="player-status" class="breathing-instruction">Pronto para iniciar</p>
+
+            <!-- Novo Botão de Recomendação -->
+                    
+            
+            <div class="player-controls">
+                <button id="player-play-pause-btn" class="btn player-btn btn-primary" onclick="togglePlayPause()">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button id="player-stop-btn" class="btn player-btn btn-secondary" onclick="closeMeditationPlayer()">
+                    <i class="fas fa-stop"></i>
+                </button>
             </div>
         </div>
     </div>
-</div>
 
+<!-- CAÇA-PALAVRAS MODAL -->
+    <!-- CAÇA-PALAVRAS MODAL (LAYOUT CORRIGIDO) -->
+    <div id="word-search-modal" class="modal">
+        <div class="modal-content game-modal-content">
+            <!-- Cabeçalho com Título e Timer -->
+            <div class="game-header">
+                <h2>Caça-Palavras</h2>
+                <div class="game-timer-badge">
+                    <i class="fas fa-clock"></i>
+                    <span id="word-search-timer">00:00</span>
+                </div>
+                <!-- Botão de Fechar (X) -->
+                <span class="close-btn game-close-btn" onclick="closeWordSearchGame()">&times;</span>
+            </div>
+
+            <!-- Corpo do Jogo -->
+            <div class="game-body">
+                <p id="word-search-win-message" class="modal-success-message"></p>
+                
+                <div class="board-container">
+                    <div id="word-search-grid" class="board">
+                        <!-- Gerado via JS -->
+                    </div>
+                </div>
+
+                <div class="words-container">
+                    <ul id="word-search-list" class="words-list">
+                        <!-- Lista de palavras gerada via JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Rodapé com Botões -->
+            <div class="game-footer">
+                <button class="btn btn-secondary" onclick="resetWordSearchGame()">Reiniciar</button>
+                <button class="btn btn-danger" onclick="closeWordSearchGame()">Sair do Jogo</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <div id="meditation-player-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 id="player-title">Carregando...</h2>
+        <p class="text-muted" id="player-category-tag">Foco</p>
+        
+        <div class="player-visualizer">
+            <div class="player-circle"></div>
+            <i class="fas fa-brain"></i>
+        </div>
+        <!-- Se tiver vídeo, aparece aqui -->
+            <div id="player-video-container">
+                <!-- Iframe injetado pelo JS -->
+            </div>
+
+            <!-- Se NÃO tiver vídeo, aparece o visualizador -->
+            <div class="player-visualizer">
+                <div id="player-visual-circle" class="player-circle"></div>
+                <i class="fas fa-brain"></i>
+            </div>
+        
+        <p id="player-timer" class="timer-display">00:00</p>
+        <p id="player-status" class="breathing-instruction">Pronto para iniciar</p>
+        
+        <div class="player-controls">
+            <p type="button"  id="player-play-pause-btn" class="btn btn-primary player-btn">
+                <i class="fas fa-play"></i>
+
+            </p>
+            <p type="button" id="player-stop-btn" class="btn btn-secondary player-btn">
+                <i class="fas fa-stop"></i>
+            </p>
+        </div>
+    </div>
+</div>
+   
     
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js "></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-analytics-compat.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 
     <script src="script.js"></script>
+
 </body>
 </html>
